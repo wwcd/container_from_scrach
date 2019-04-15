@@ -9,7 +9,7 @@ Using alpine as rootfs
 
 Run simplecontainer
 
-    ❯ sudo /opt/go/bin/go run main.go run sh
+    ❯ go run main.go run sh
     Container PID is  13872
     Container init PID is  1
     / #
