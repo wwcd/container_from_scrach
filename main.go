@@ -26,6 +26,7 @@ func parent() {
 
 	cmd.SysProcAttr = &syscall.SysProcAttr{
 		Cloneflags: syscall.CLONE_NEWUTS | syscall.CLONE_NEWPID | syscall.CLONE_NEWNS | syscall.CLONE_NEWNET,
+		// Unshareflags: syscall.CLONE_NEWNS,
 	}
 
 	must(cmd.Start())
@@ -36,7 +37,8 @@ func parent() {
 func child() {
 	fmt.Println("Container init PID is ", os.Getpid())
 
-	must(syscall.Chroot("/root/alpine-3.5"))
+	must(syscall.Sethostname([]byte("simplecontainer")))
+	must(syscall.Chroot("./rootfs/mountedfs"))
 	must(os.Chdir("/"))
 	must(syscall.Mount("proc", "proc", "proc", 0, ""))
 
